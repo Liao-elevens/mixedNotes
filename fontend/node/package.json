@@ -1,0 +1,11 @@
+{
+  "name": "node-package-name",
+  "version": "1.0.0",
+  "description": "node-description",
+  "main": "1.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "ly",
+  "license": "ISC"
+}

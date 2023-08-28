@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+    <a onclick="downFile()">js下载</a>
+    <a href={url}>测试下载</a>
+</body>
+
+<script>
+    const imgTUrl = './correct.png';
+    const url="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7482b3ad2cd14edda31f05399c2ae759~tplv-k3u1fbpfcp-zoom-1.image"
+
+const downFile= async()=> {
+    // const imgUrl = './correct.png';
+    const imgUrl = './correct.png';
+    const blobLocal = new Blob([imgUrl]);
+    const hrefLocal = window.URL.createObjectURL(blobLocal);
+    console.log(hrefLocal,'==本地图片==',blobLocal);
+
+
+    const wwwUrl="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7482b3ad2cd14edda31f05399c2ae759~tplv-k3u1fbpfcp-zoom-1.image"
+    const prUrl='https://testsystemadmin.smupet.com/upload/shopQRcode/77_6HXN58.jpg'
+    const nctUrl='https://dev-cdn-common.codemao.cn/test/544/market/301/16389529222503966.png'
+    const res = await fetch(prUrl); // 下载网络图片
+    console.log('下载网络图片',res);
+    const blob = await res.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+    console.log(objectUrl,'网络图片',blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = '下载的图片名.png';
+    a.click();
+    a.remove();
+	}
+</script>
+
+</html>
