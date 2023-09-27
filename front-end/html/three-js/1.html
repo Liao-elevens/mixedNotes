@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>My first three.js app</title>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+
+    // Our Javascript will go here.
+
+    // 1、场景、相机和渲染器
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000);
+    const renderer = new THREE.WebGLRenderer();
+    const initCamera = () => {
+      camera.position.set(0,0,100);
+      camera.lookAt(0,0,0);
+    }
+    const initRenderer = () => {
+      renderer.setSize(window.innerWidth,window.innerHeight);
+      renderer.setClearColor('darkBlue');
+      document.body.appendChild(renderer.domElement);
+    }
+
+
+    // 2、添加立方体
+    let cube
+    const initCube = () => {
+      const geometry = new THREE.BoxGeometry(1,1,1);
+      const material = new THREE.MeshBasicMaterial({ color: 'yellow' });
+      cube = new THREE.Mesh(geometry,material);
+      scene.add(cube);
+      camera.position.z = 5;
+    }
+
+    let line
+    const initLine = () => {
+      const material = new THREE.LineBasicMaterial({ color: 'red' });
+      const points = [];
+      points.push(new THREE.Vector3(-30,0,0));
+      points.push(new THREE.Vector3(0,60,0));
+      points.push(new THREE.Vector3(30,0,0));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      line = new THREE.Line(geometry,material);
+      scene.add(line);
+    }
+    // 添加地板
+    const initFloor = () => {
+      var floorGeo = new THREE.PlaneBufferGeometry(12,8,1,1);
+      var floorMaterial = new THREE.MeshBasicMaterial({ color: "#aaaaaa" });
+      var floor = new THREE.Mesh(floorGeo,floorMaterial);
+      floor.position.set(0,0,-1);
+      scene.add(floor);
+    }
+
+    // 渲染场景
+    function animate() {
+      requestAnimationFrame(animate);
+      if (line) {
+        line.rotation.x += 0.01;
+        line.rotation.y += 0.01;
+      }
+      if (cube) {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+      }
+
+      renderer.render(scene,camera);
+    }
+    const initThree = () => {
+      initCamera()
+      initRenderer()
+      initCube()
+      // initLine()
+
+      animate();
+    }
+    initThree()
+  </script>
+</body>
+
+</html>
